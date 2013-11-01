@@ -1,0 +1,21 @@
+{
+  "name": "Backless.js",
+  "version": "0.0.0",
+  "description": "A backendless database solution for your front end application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zigzackattack/Backless.js.git"
+  },
+  "keywords": [
+    "node",
+    "db",
+    "database",
+    "javascript"
+  ],
+  "author": "Zachary Babtkis <zackbabtkis@gmail.com>",
+  "license": "MIT"
+}
