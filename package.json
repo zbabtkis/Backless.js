@@ -4,7 +4,7 @@
   "description": "A backendless database solution for your front end application.",
   "main": "index.js",
   "scripts": {
-    "test": "grunt nodeunit"
+    "test": "mocha --compilers coffee:coffee-script"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,15 @@
     "javascript"
   ],
   "author": "Zachary Babtkis <zackbabtkis@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "chai": "~1.8.1",
+    "grunt": "~0.4.1",
+    "sinon": "~1.7.3"
+  },
+  "dependencies": {
+    "backbone": "~1.1.0",
+    "coffee-script": "~1.6.3"
+  }
 }

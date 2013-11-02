@@ -1,0 +1,1 @@
+require('src/backless.js')();
