@@ -4,7 +4,7 @@
   "description": "A backendless database solution for your front end application.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers coffee:coffee-script"
+    "test": "mocha --compilers coffee:coffee-script -R spec"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,12 @@
     "mocha": "~1.13.0",
     "chai": "~1.8.1",
     "grunt": "~0.4.1",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "sinon-chai": "~2.4.0"
   },
   "dependencies": {
     "backbone": "~1.1.0",
-    "coffee-script": "~1.6.3"
+    "coffee-script": "~1.6.3",
+    "node-uuid": "~1.4.1"
   }
 }

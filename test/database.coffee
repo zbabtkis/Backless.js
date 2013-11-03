@@ -1,29 +1,41 @@
-chai   = require 'chai'
-expect = chai.expect
-assert = chai.assert
-should = chai.should
+chai       = require 'chai'
+expect     = chai.expect
+assert     = chai.assert
+should     = chai.should()
+sinon      = require 'sinon'
 
 describe "Database", ->
 	Database = require '../src/backless.db'
 
-	it "should be instantiated with group related collections", ->
-		db          = new Database
-		users       = db.get "$users"
-		groups      = db.get "$groups"
-		permissions = db.get "$permissions"
+	it "should return collection when adding collection", ->
+		db = new Database
+		myCol = db.add id: 'myCol'
 
-		expect(users).to.be.an 'object'
-		expect(groups).to.be.an 'object'
-		expect(permissions).to.be.an 'object'
+		expect(myCol).to.be.an('object')
 
-	it "should require a user/group session to query", ->
+	it "should emit collection:add event when adding collection", ->
+		spy = sinon.spy()
 		db = new Database
 
-		noSessionQuery = ->
-			false
+		db.on 'onAddCollection', spy
+		db.add id: 'Users'
 
-		sessionQuery = ->
-			true
+		expect(spy.called)
 
-		expect(noSessionQuery()).to.equal false
-		expect(sessionQuery()).to.equal true
+	it "should add new collection to @collections", ->
+		db = new Database
+		oldLen = db.collections.length
+		db.add id: 'myCol'
+
+		expect(db.collections.length).to.equal(oldLen + 1)
+
+	it "should retrieve collection by id", ->
+		db = new Database
+		db.add id: 'myCol'
+
+		col = db.use 'myCol'
+
+		expect(col.id).to.equal 'myCol'
+
+
+
