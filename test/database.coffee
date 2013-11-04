@@ -13,7 +13,7 @@ describe "Database", ->
 
 		expect(myCol).to.be.an('object')
 
-	it "should emit collection:add event when adding collection", ->
+	it "should emit onAddCollection event when adding collection", ->
 		spy = sinon.spy()
 		db = new Database
 
@@ -36,6 +36,24 @@ describe "Database", ->
 		col = db.use 'myCol'
 
 		expect(col.id).to.equal 'myCol'
+
+	it "should add as collection if added collection isn't instance of Collection", ->
+		db = new Database
+		col = db.add 
+
+		expect(col.id).not.to.beUndefined
+
+	it "should join by id", ->
+		db = new Database
+		col1 = db.add id: 'col1'
+		col2 = db.add id: 'col2'
+
+		col1.add id: 23, fname: 'Ron'
+		col2.add id: 23, lname: 'Swanson'
+
+		res = db.join 'col1', 'col2', 'id', 23
+
+		expect(res.fname + ' ' + res.lname).to.equal 'Ron Swanson'
 
 
 

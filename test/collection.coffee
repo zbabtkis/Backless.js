@@ -19,6 +19,11 @@ describe "Collection", ->
 
 		expect(myCol.models.length).to.equal(1)
 
+	it "should override UUID with provided id", ->
+		myCol = new Collection id: 456
+
+		expect(myCol.id).to.equal 456
+
 	it "should fire onBeforeAdd event before adding to collection", (done)->
 		myCol = new Collection "myCol"
 
@@ -40,6 +45,16 @@ describe "Collection", ->
 
 		myCol.add
 			name: "Zack"
+
+	it "should fire onBeforeDeliver with model and field", (done) ->
+		myCol = new Collection "myCol"
+
+		myCol.on "onBeforeDeliver", (model, field) ->
+			expect(model).not.to.be.undefined
+			expect(field).not.to.be.undefined
+			done()
+
+		myCol.find id: "something"
 
 	it "should be able to find model by id", ->
 		myCol = new Collection 123

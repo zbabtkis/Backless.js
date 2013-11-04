@@ -1,14 +1,18 @@
 fs     = require 'fs'
 UUID   = require 'node-uuid'
+_      = require 'lodash'
 Schema = require './backless.schema'
 EventEmitter = require("events").EventEmitter
 
 class Collection extends EventEmitter
-	models:   []
-	_indexes: {}
-
 	constructor: (name, options)->
-		@name = name
+
+		@models   = []
+		@_indexes = {}
+
+		if name instanceof Object
+			options = name
+		else @name = name
 
 		if options
 			{@id} = options
@@ -20,9 +24,9 @@ class Collection extends EventEmitter
 		@emit "onBeforeAdd", model
 
 		if model isnt {}
-			length = @models.length
+			index = @models.length
 			@models.push model
-			@_indexes[model.id] = length
+			@_indexes[model.id] = index
 
 			@emit "onAfterAdd", model
 
@@ -31,20 +35,14 @@ class Collection extends EventEmitter
 	find: (index) ->
 		models = []
 
-		if typeof index is 'object'
+		if index instanceof Object
 			spec = index
 
 			for mod in @models
-				matches = 0
-				total   = Object.keys(spec).length
 
-				for attr, val in spec
-					break if col[attr] isnt val
-
-					models.push col
-					matches++
-
-				models.push col if matches is total
+				for attr in _.keys spec
+					break if mod[attr] isnt spec[attr]
+					models.push mod
 
 			if models.length is 1
 				models = models[0]
@@ -55,5 +53,13 @@ class Collection extends EventEmitter
 		@emit "onBeforeDeliver", models
 
 		models
+
+	findOne: (index) ->
+		models = @find index
+
+		if models instanceof Array
+			models[0]
+		else 
+			models
 
 module.exports = Collection
