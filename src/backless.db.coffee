@@ -7,14 +7,11 @@ class Database extends EventEmitter
 		@collections = []
 		@_indexes    = {}
 
-		@add '$users'
-		@add '$groups'
-		@add '$permissions'
-
 	add: (collection, silent) ->
-		index = @collections.length
+		index        = @collections.length
+		isCollection = collection instanceof Collection
 
-		if not (collection instanceof Collection)
+		if not isCollection
 			collection = new Collection collection
 
 		@emit "onBeforeAddCollection", collection
@@ -23,7 +20,7 @@ class Database extends EventEmitter
 		@_indexes[collection.id] = index
 
 		@emit "onAddCollection", collection if not silent
-
+                        
 		collection
 
 	use: (id) ->

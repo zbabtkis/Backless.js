@@ -46,16 +46,6 @@ describe "Collection", ->
 		myCol.add
 			name: "Zack"
 
-	it "should fire onBeforeDeliver with model and field", (done) ->
-		myCol = new Collection "myCol"
-
-		myCol.on "onBeforeDeliver", (model, field) ->
-			expect(model).not.to.be.undefined
-			expect(field).not.to.be.undefined
-			done()
-
-		myCol.find id: "something"
-
 	it "should be able to find model by id", ->
 		myCol = new Collection 123
 

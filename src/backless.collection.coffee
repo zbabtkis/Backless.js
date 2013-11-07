@@ -50,9 +50,11 @@ class Collection extends EventEmitter
 		else
 			models = @models[@_indexes[index]]
 
-		@emit "onBeforeDeliver", models
+		found = _.clone(models)
 
-		models
+		@emit "onBeforeFind", found
+
+		return found
 
 	findOne: (index) ->
 		models = @find index
